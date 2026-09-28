@@ -1,0 +1,21 @@
+.bv-body { background: #f3f6fb; }
+.bv-nav { background: #07111f; }
+.bv-hero { background: radial-gradient(900px 280px at 80% 0%, #1b6ef3 0, transparent 55%), linear-gradient(120deg, #07111f, #0c1b33); color: #fff; padding: 42px 28px 36px; }
+.bv-hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: center; }
+.bv-hero h1 { font-size: 36px; margin: 8px 0 10px; letter-spacing: -.04em; }
+.bv-cats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.bv-chip { background: #13233b; color: #d5e4f7; border: 1px solid #243a5a; border-radius: 999px; padding: 7px 12px; font-weight: 600; }
+.bv-chip.on { background: #1b6ef3; border-color: #1b6ef3; color: #fff; }
+.bv-card-art { border-radius: 18px; min-height: 168px; padding: 18px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 18px 40px rgba(7,17,31,.28); }
+.bv-card-art .brand { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+.bv-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.16); font-weight: 800; }
+.bv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.bv-item { background: #fff; border: 1px solid #e7edf4; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.bv-item .meta { padding: 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.bv-item .price { font-size: 20px; font-weight: 800; }
+.life { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
+.life .s { background: #fff; border: 1px solid #e7edf4; border-radius: 12px; padding: 12px; }
+.life .s.on { border-color: #1b6ef3; box-shadow: 0 0 0 3px #e8f0fe; }
+.voucher { font-family: ui-monospace, Menlo, monospace; font-size: 22px; letter-spacing: .14em; background: #0b1728; color: #fff; padding: 16px; border-radius: 12px; text-align: center; }
+.cart-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #e7edf4; }
+@media (max-width: 900px) { .bv-hero-inner, .bv-grid, .life { grid-template-columns: 1fr; } }
