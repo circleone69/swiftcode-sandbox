@@ -35,21 +35,22 @@
         <div class="cko-method on" data-method="upi-intent">
           <b>UPI Intent</b>
           <div class="muted">Opens the real Google Pay / PhonePe / Paytm / BHIM app on this phone</div>
-          <label class="muted" style="display:block;margin-top:10px">Merchant VPA (payee)</label>
-          <input class="field" id="merchant-vpa" placeholder="you@okhdfcbank" />
+          <label class="muted" style="display:block;margin-top:10px">Merchant VPA (payee) — use an ID you own</label>
+          <input class="field" id="merchant-vpa" placeholder="yourname@okhdfcbank" />
           <div class="apps" id="apps">
-            <button type="button" class="app-btn on" data-app="Google Pay">Open Google Pay</button>
-            <button type="button" class="app-btn" data-app="PhonePe">Open PhonePe</button>
-            <button type="button" class="app-btn" data-app="Paytm">Open Paytm</button>
-            <button type="button" class="app-btn" data-app="BHIM">Open BHIM</button>
+            <a class="app-btn on" id="lnk-gpay" data-app="Google Pay" href="#">Open Google Pay</a>
+            <a class="app-btn" id="lnk-phonepe" data-app="PhonePe" href="#">Open PhonePe</a>
+            <a class="app-btn" id="lnk-paytm" data-app="Paytm" href="#">Open Paytm</a>
+            <a class="app-btn" id="lnk-bhim" data-app="BHIM" href="#">Open BHIM</a>
           </div>
-          <p class="muted" id="intent-status" style="margin:10px 0 0">Tap an app to launch it with this order amount.</p>
+          <a class="btn btn-primary" id="lnk-upi" href="#" style="margin-top:10px;display:flex;justify-content:center">Open any UPI app</a>
+          <p class="muted" id="intent-status" style="margin:10px 0 0">Must be opened on a phone. A laptop cannot launch GPay or PhonePe.</p>
         </div>
         <div class="cko-method" data-method="upi-qr">
           <b>UPI QR</b>
           <div class="muted">Customer scans a dynamic QR generated for this order</div>
           <div class="qr" title="Dynamic QR"></div>
-          <div class="muted" style="text-align:center">upi://pay?pa=buckzy@hdfcbank&am=order</div>
+          <div class="muted" style="text-align:center">upi://pay?pa=merchant@okhdfcbank&am=order</div>
         </div>
         <div class="cko-method" data-method="upi-collect">
           <b>UPI Collect</b>
