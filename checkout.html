@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buckzy Checkout</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="cko-body">
+  <div class="cko">
+    <div>
+      <div class="cko-brand">
+        <div class="logo">B</div>
+        <div>
+          <b>Buckzy</b>
+          <div class="muted">Secure checkout</div>
+        </div>
+      </div>
+      <div class="cko-card">
+        <div class="muted">Paying</div>
+        <div style="font-weight:700;margin-top:4px" id="merchant-name">Jason Software Solutions Pvt Ltd</div>
+        <div class="muted" id="note">Demo order</div>
+        <div class="cko-amt" id="amt-label">₹1,876.45</div>
+        <div class="muted">MID BCKZ00001234 · INR</div>
+        <div class="muted" id="payer-hint"></div>
+        <hr style="border:0;border-top:1px solid #e7edf4;margin:16px 0">
+        <div class="stat-row"><span class="muted">Order</span><span class="mono" id="order-id">—</span></div>
+        <div class="stat-row"><span class="muted">Settlement</span><span>T+0 into merchant ledger</span></div>
+      </div>
+    </div>
+
+    <div class="cko-card" id="panel">
+      <h3 style="margin:0 0 12px">Choose payment method</h3>
+      <div class="cko-methods">
+        <div class="cko-method on" data-method="upi-intent">
+          <b>UPI Intent</b>
+          <div class="muted">Opens the real Google Pay / PhonePe / Paytm / BHIM app on this phone</div>
+          <label class="muted" style="display:block;margin-top:10px">Merchant VPA (payee)</label>
+          <input class="field" id="merchant-vpa" placeholder="you@okhdfcbank" />
+          <div class="apps" id="apps">
+            <button type="button" class="app-btn on" data-app="Google Pay">Open Google Pay</button>
+            <button type="button" class="app-btn" data-app="PhonePe">Open PhonePe</button>
+            <button type="button" class="app-btn" data-app="Paytm">Open Paytm</button>
+            <button type="button" class="app-btn" data-app="BHIM">Open BHIM</button>
+          </div>
+          <p class="muted" id="intent-status" style="margin:10px 0 0">Tap an app to launch it with this order amount.</p>
+        </div>
+        <div class="cko-method" data-method="upi-qr">
+          <b>UPI QR</b>
+          <div class="muted">Customer scans a dynamic QR generated for this order</div>
+          <div class="qr" title="Dynamic QR"></div>
+          <div class="muted" style="text-align:center">upi://pay?pa=buckzy@hdfcbank&am=order</div>
+        </div>
+        <div class="cko-method" data-method="upi-collect">
+          <b>UPI Collect</b>
+          <div class="muted">We send a collect request to the VPA</div>
+          <input class="field" id="vpa" placeholder="name@okhdfcbank" />
+        </div>
+        <div class="cko-method" data-method="card">
+          <b>Credit / Debit card</b>
+          <input class="field" id="pan" placeholder="ACCT-000015" maxlength="19" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <input class="field" id="exp" placeholder="MM/YY" />
+            <input class="field" id="cvv" placeholder="CVV" maxlength="4" />
+          </div>
+        </div>
+        <div class="cko-method" data-method="nb">
+          <b>Net banking</b>
+          <select class="field" id="bank">
+            <option>HDFC Bank</option>
+            <option>ICICI Bank</option>
+            <option>SBI</option>
+            <option>Axis Bank</option>
+          </select>
+        </div>
+        <div class="cko-method" data-method="wallet">
+          <b>Wallet</b>
+          <select class="field" id="wallet">
+            <option>MobiKwik</option>
+            <option>Amazon Pay</option>
+            <option>Paytm Wallet</option>
+          </select>
+        </div>
+      </div>
+      <label class="muted" style="display:flex;gap:8px;align-items:center;margin-top:12px">
+        <input type="checkbox" id="fail" /> Simulate failure (insufficient funds)
+      </label>
+      <button class="btn btn-primary pay-btn" id="pay">Pay now</button>
+      <div style="margin-top:10px;text-align:center"><a href="index.html">Cancel and return to dashboard</a></div>
+    </div>
+  </div>
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/webhooks.js"></script>
+  <script src="js/upi-intent.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

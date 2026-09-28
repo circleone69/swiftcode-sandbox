@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas Market · powered by Buckzy</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-nav">
+    <a href="home.html" style="display:flex;gap:8px;align-items:center;color:#fff"><div class="logo">B</div><b>Atlas Market</b></a>
+    <div class="links">
+      <a href="home.html">Buckzy</a>
+      <a href="docs.html">API</a>
+      <a href="index.html">Merchant dashboard</a>
+    </div>
+  </header>
+
+  <div class="section">
+    <div class="badge blue">Ecommerce demo · MID BCKZ00001234</div>
+    <h2>Shop. Pay with Buckzy.</h2>
+    <p class="muted">This store does not process cards itself. On Pay it calls <span class="mono">Buckzy.createOrder</span> and sends you to hosted checkout — Intent, Collect, QR, cards, netbanking, wallets.</p>
+    <div id="thanks" class="card panel" style="display:none;margin:16px 0">
+      <span class="badge success">Order paid</span>
+      <p id="thanks-copy"></p>
+      <a href="index.html#/overview">View capture on the Buckzy dashboard</a>
+    </div>
+    <div class="store-grid" id="grid"></div>
+  </div>
+
+  <div class="cart-bar">
+    <div>
+      <b id="cart-label">Cart empty</b>
+      <div class="muted" id="cart-sub">Add an item to create a Buckzy order</div>
+    </div>
+    <button class="btn btn-primary" id="pay">Pay with Buckzy</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/webhooks.js"></script>
+  <script src="js/store.js"></script>
+</body>
+</html>

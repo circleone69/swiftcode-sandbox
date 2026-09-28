@@ -2,11 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=index.html" />
-  <link rel="canonical" href="index.html" />
-  <title>Buckzy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buckzy · Payment APIs for ecommerce</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <p><a href="index.html">Continue to Buckzy</a></p>
+  <header class="site-nav">
+    <a href="home.html" style="display:flex;gap:8px;align-items:center;color:#fff"><div class="logo">B</div><b>Buckzy</b></a>
+    <div class="links">
+      <a href="home.html" class="on">Product</a>
+      <a href="docs.html">API docs</a>
+      <a href="store.html">Demo store</a>
+      <a href="index.html">Merchant dashboard</a>
+      <a class="btn btn-primary" href="store.html">Try checkout</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-wrap">
+      <div>
+        <div class="badge blue">Sandbox · India rails</div>
+        <h1>Payment APIs for ecommerce companies</h1>
+        <p>Buckzy is the gateway. Your store keeps the cart and catalog. We give you UPI Intent, Collect, QR, cards, netbanking and wallets behind one Order API and one webhook.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="store.html">Open demo ecommerce store</a>
+          <a class="btn" href="docs.html" style="background:#13233b;color:#fff;border-color:#2a4366">Read the API</a>
+          <a class="btn" href="index.html" style="background:#13233b;color:#fff;border-color:#2a4366">Ops dashboard</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="muted" style="color:#8aa0bd;margin-bottom:8px">POST /v1/orders</div>
+<pre>curl https://api.buckzy.com/v1/orders \
+  -u rz_test_bckz_live_demo: \
+  -d amount=2499 \
+  -d currency=INR \
+  -d receipt=ATLAS-1042 \
+  -d methods[]=upi_intent \
+  -d methods[]=upi_collect \
+  -d methods[]=upi_qr \
+  -d methods[]=card \
+  -d methods[]=netbanking</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Rails we expose to your checkout</h2>
+    <p class="muted">One order object. The hosted checkout (or your own UI via our tokens) collects on these methods.</p>
+    <div class="rail-grid">
+      <div class="rail"><h3>UPI Intent</h3><p class="muted">Launch GPay, PhonePe, Paytm, BHIM with a native intent. Highest conversion on mobile.</p></div>
+      <div class="rail"><h3>UPI Collect</h3><p class="muted">Push a collect request to a VPA. Customer approves in their app.</p></div>
+      <div class="rail"><h3>UPI QR</h3><p class="muted">Dynamic QR per order. Desktop and store-counter flows.</p></div>
+      <div class="rail"><h3>Credit & debit cards</h3><p class="muted">Visa, Mastercard, RuPay, Amex. 3DS2 on the hosted page so PAN never hits you.</p></div>
+      <div class="rail"><h3>Net banking</h3><p class="muted">Redirect to the issuing bank. Status confirmed only on callback + webhook.</p></div>
+      <div class="rail"><h3>Wallets</h3><p class="muted">MobiKwik, Amazon Pay, Paytm wallet as fallback rails.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <h2>How an ecommerce integration works</h2>
+    <div class="steps">
+      <div class="step"><b>1. Create order</b><p class="muted">Your backend calls Buckzy with amount, receipt and allowed methods. You get an order_id and a checkout URL.</p></div>
+      <div class="step"><b>2. Customer pays</b><p class="muted">Redirect to Buckzy hosted checkout. Intent / collect / QR / card / NB / wallet all sit on that page.</p></div>
+      <div class="step"><b>3. Trust the webhook</b><p class="muted">payment.captured is the source of truth. Then fulfill the order. The dashboard shows the same ledger.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <h2>What this sandbox includes</h2>
+    <div class="rail-grid">
+      <a class="rail" href="store.html"><h3>Atlas Market</h3><p class="muted">A fake ecommerce site that calls createOrder and sends the shopper to Buckzy checkout.</p></a>
+      <a class="rail" href="docs.html"><h3>API reference</h3><p class="muted">Orders, payments, webhooks and the rule that the browser return URL is never enough.</p></a>
+      <a class="rail" href="index.html"><h3>Merchant console</h3><p class="muted">The ops dashboard from your screenshots. Live sandbox payments land here.</p></a>
+    </div>
+    <p class="muted" style="margin-top:22px">This is a demonstration stack in the browser. A production Buckzy would sit on a sponsor bank nodal account, NPCI access and PCI-scoped card fields. The API shapes and the ledger math are the same.</p>
+  </section>
 </body>
 </html>

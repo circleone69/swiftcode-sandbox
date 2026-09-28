@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buckzy API docs</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-nav">
+    <a href="home.html" style="display:flex;gap:8px;align-items:center;color:#fff"><div class="logo">B</div><b>Buckzy</b></a>
+    <div class="links">
+      <a href="home.html">Product</a>
+      <a href="docs.html" class="on">API docs</a>
+      <a href="store.html">Demo store</a>
+      <a href="index.html">Merchant dashboard</a>
+    </div>
+  </header>
+  <div class="section docs">
+    <nav>
+      <a href="#auth">Authentication</a>
+      <a href="#orders">Orders</a>
+      <a href="#checkout">Checkout</a>
+      <a href="#methods">Methods</a>
+      <a href="#webhooks">Webhooks</a>
+      <a href="#errors">Errors</a>
+    </nav>
+    <article>
+      <h2 id="auth">Authentication</h2>
+      <p>Sandbox key for this demo: <span class="mono">rz_test_bckz_live_demo</span>. In production you send it as HTTP Basic on every server-side call. Never put the live secret in a browser.</p>
+
+      <h2 id="orders">Create an order</h2>
+      <p>The ecommerce backend creates an order before the shopper sees checkout. Amount is in rupees for this sandbox (production would use paise).</p>
+<pre>POST /v1/orders
+{
+  "amount": 2499.00,
+  "currency": "INR",
+  "receipt": "ATLAS-1042",
+  "customer": { "name": "Asha Rao", "email": "asha@store.in" },
+  "methods": ["upi_intent", "upi_collect", "upi_qr", "card", "netbanking", "wallet"],
+  "notes": { "title": "Sonic buds" },
+  "callback_url": "https://atlas.example/orders/thanks"
+}
+
+→
+{
+  "id": "order_m4k2ab",
+  "status": "created",
+  "checkout_url": "https://checkout.buckzy.com/order_m4k2ab"
+}</pre>
+
+      <h2 id="checkout">Hosted checkout</h2>
+      <p>Redirect the shopper to <span class="mono">checkout_url</span>. After pay they return to <span class="mono">callback_url</span>. Do not mark the sale paid from that redirect. Wait for the webhook, or poll <span class="mono">GET /v1/orders/:id</span>.</p>
+
+      <h2 id="methods">Payment methods</h2>
+      <table>
+        <thead><tr><th>Code</th><th>What Buckzy does</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">upi_intent</td><td>Opens GPay / PhonePe / Paytm / BHIM with a transaction reference.</td></tr>
+          <tr><td class="mono">upi_collect</td><td>Sends a collect request to the VPA the shopper typed.</td></tr>
+          <tr><td class="mono">upi_qr</td><td>Issues a dynamic QR bound to the order amount.</td></tr>
+          <tr><td class="mono">card</td><td>Hosted card fields + 3DS. You receive a token, never PAN.</td></tr>
+          <tr><td class="mono">netbanking</td><td>Bank redirect. Final state from bank callback.</td></tr>
+          <tr><td class="mono">wallet</td><td>Wallet authorize + capture.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="webhooks">Webhooks</h2>
+      <p>Posted to the merchant endpoint. Sign every body with HMAC-SHA256. Retry 8 times. Return 401 if the signature fails — Buckzy will retry, the merchant must not fulfill.</p>
+<pre>X-Buckzy-Signature: t=1758777600,v1=3c1b0e…
+
+signed_payload = "{t}.{raw_body}"
+v1 = hex(HMAC_SHA256(webhook_secret, signed_payload))
+
+# Node
+const crypto = require("crypto");
+const expected = crypto
+  .createHmac("sha256", process.env.BUCKZY_WEBHOOK_SECRET)
+  .update(`${t}.${rawBody}`)
+  .digest("hex");
+if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(v1))) {
+  return res.status(401).end();
+}
+if (Math.abs(Date.now()/1000 - t) > 300) return res.status(401).end();</pre>
+      <p>Sandbox secret: <span class="mono">whsec_bckz_sandbox_4e2f9a</span>. Playground: dashboard → Webhooks.</p>
+<pre>payment.captured
+{
+  "event": "payment.captured",
+  "id": "evt_…",
+  "created_at": 1758777600,
+  "payload": {
+    "id": "BCKZLIVE…",
+    "order_id": "order_m4k2ab",
+    "amount": 2499.00,
+    "method": "UPI Intent (GPay)",
+    "status": "SUCCESS"
+  }
+}</pre>
+
+      <h2 id="errors">Sandbox decline</h2>
+      <p>Use VPA containing <span class="mono">fail</span>, or tick Simulate failure on checkout, to get <span class="mono">U05 Insufficient Funds</span>.</p>
+      <p class="muted">This documentation describes the sandbox in these HTML files. The demo store calls <span class="mono">Buckzy.createOrder()</span> in <span class="mono">js/api.js</span> and writes into the same ledger the dashboard reads.</p>
+    </article>
+  </div>
+</body>
+</html>
